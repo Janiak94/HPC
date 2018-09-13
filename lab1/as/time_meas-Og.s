@@ -1,0 +1,74 @@
+	.file	"time_meas.c"
+	.text
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC1:
+	.string	"%s: %.10f\n"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB24:
+	.cfi_startproc
+	cmpl	$1, %edi
+	jne	.L5
+	pushq	%rbx
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	subq	$48, %rsp
+	.cfi_def_cfa_offset 64
+	movq	%rsi, %rbx
+	movl	$1, %esi
+	leaq	32(%rsp), %rdi
+	call	timespec_get
+	movl	$0, %eax
+.L3:
+	cmpq	$999999999, %rax
+	ja	.L10
+	addq	$1, %rax
+	jmp	.L3
+.L10:
+	movl	$1, %esi
+	leaq	16(%rsp), %rdi
+	call	timespec_get
+	movq	16(%rsp), %rax
+	subq	32(%rsp), %rax
+	movq	24(%rsp), %rdx
+	subq	40(%rsp), %rdx
+	pxor	%xmm0, %xmm0
+	cvtsi2sdq	%rdx, %xmm0
+	movapd	%xmm0, %xmm1
+	mulsd	.LC0(%rip), %xmm1
+	pxor	%xmm0, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+	addsd	%xmm1, %xmm0
+	cvtsd2ss	%xmm0, %xmm0
+	movq	(%rbx), %rax
+	movzwl	10(%rax), %edx
+	movw	%dx, 14(%rsp)
+	movzbl	12(%rax), %eax
+	movb	%al, 16(%rsp)
+	cvtss2sd	%xmm0, %xmm0
+	leaq	14(%rsp), %rsi
+	movl	$.LC1, %edi
+	movl	$1, %eax
+	call	printf
+	movl	$0, %eax
+	addq	$48, %rsp
+	.cfi_def_cfa_offset 16
+	popq	%rbx
+	.cfi_def_cfa_offset 8
+	ret
+.L5:
+	.cfi_restore 3
+	movl	$-1, %eax
+	ret
+	.cfi_endproc
+.LFE24:
+	.size	main, .-main
+	.section	.rodata.cst8,"aM",@progbits,8
+	.align 8
+.LC0:
+	.long	3894859413
+	.long	1041313291
+	.ident	"GCC: (GNU) 8.1.1 20180712 (Red Hat 8.1.1-5)"
+	.section	.note.GNU-stack,"",@progbits
