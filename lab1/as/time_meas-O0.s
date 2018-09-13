@@ -14,10 +14,10 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$96, %rsp
-	movl	%edi, -84(%rbp)
-	movq	%rsi, -96(%rbp)
-	cmpl	$1, -84(%rbp)
+	subq	$80, %rsp
+	movl	%edi, -68(%rbp)
+	movq	%rsi, -80(%rbp)
+	cmpl	$1, -68(%rbp)
 	je	.L2
 	movl	$-1, %eax
 	jmp	.L6
@@ -58,16 +58,15 @@ main:
 	addsd	%xmm1, %xmm0
 	cvtsd2ss	%xmm0, %xmm3
 	movss	%xmm3, -20(%rbp)
-	movq	-96(%rbp), %rax
+	movq	-80(%rbp), %rax
 	movq	(%rax), %rax
-	leaq	10(%rax), %rcx
-	leaq	-66(%rbp), %rax
-	movl	$3, %edx
-	movq	%rcx, %rsi
+	movl	$45, %esi
 	movq	%rax, %rdi
-	call	memcpy
+	call	strrchr
+	addq	$1, %rax
+	movq	%rax, -32(%rbp)
 	cvtss2sd	-20(%rbp), %xmm0
-	leaq	-66(%rbp), %rax
+	movq	-32(%rbp), %rax
 	movq	%rax, %rsi
 	movl	$.LC1, %edi
 	movl	$1, %eax

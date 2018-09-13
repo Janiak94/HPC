@@ -14,42 +14,40 @@ main:
 	pushq	%rbx
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
-	subq	$48, %rsp
-	.cfi_def_cfa_offset 64
+	subq	$32, %rsp
+	.cfi_def_cfa_offset 48
 	movq	%rsi, %rbx
 	movl	$1, %esi
-	leaq	32(%rsp), %rdi
+	leaq	16(%rsp), %rdi
 	call	timespec_get
 	movl	$1000000000, %eax
 .L3:
 	subq	$1, %rax
 	jne	.L3
 	movl	$1, %esi
-	leaq	16(%rsp), %rdi
+	movq	%rsp, %rdi
 	call	timespec_get
-	movq	24(%rsp), %rax
-	subq	40(%rsp), %rax
+	movl	$45, %esi
+	movq	(%rbx), %rdi
+	call	strrchr
+	movq	8(%rsp), %rdx
+	subq	24(%rsp), %rdx
 	pxor	%xmm0, %xmm0
-	cvtsi2sdq	%rax, %xmm0
+	cvtsi2sdq	%rdx, %xmm0
 	mulsd	.LC0(%rip), %xmm0
-	movq	16(%rsp), %rax
-	subq	32(%rsp), %rax
+	movq	(%rsp), %rdx
+	subq	16(%rsp), %rdx
 	pxor	%xmm1, %xmm1
-	cvtsi2sdq	%rax, %xmm1
+	cvtsi2sdq	%rdx, %xmm1
 	addsd	%xmm1, %xmm0
 	cvtsd2ss	%xmm0, %xmm0
-	movq	(%rbx), %rax
-	movzwl	10(%rax), %edx
-	movw	%dx, 14(%rsp)
-	movzbl	12(%rax), %eax
-	movb	%al, 16(%rsp)
 	cvtss2sd	%xmm0, %xmm0
-	leaq	14(%rsp), %rsi
+	leaq	1(%rax), %rsi
 	movl	$.LC1, %edi
 	movl	$1, %eax
 	call	printf
 	movl	$0, %eax
-	addq	$48, %rsp
+	addq	$32, %rsp
 	.cfi_def_cfa_offset 16
 	popq	%rbx
 	.cfi_def_cfa_offset 8

@@ -29,6 +29,7 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 
 $(OTIME): src/time_meas.c
 	$(CC) $(patsubst out/time_meas%,%,$@) -o $@ $^
+	$(CC) -S $(patsubst out/time_meas%,%,$@) -o $(patsubst out/%,as/%.s,$@) $^
 
 .PHONY: clean
 

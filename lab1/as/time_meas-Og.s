@@ -41,14 +41,15 @@ main:
 	pxor	%xmm0, %xmm0
 	cvtsi2sdq	%rax, %xmm0
 	addsd	%xmm1, %xmm0
-	cvtsd2ss	%xmm0, %xmm0
-	movq	(%rbx), %rax
-	movzwl	10(%rax), %edx
-	movw	%dx, 14(%rsp)
-	movzbl	12(%rax), %eax
-	movb	%al, 16(%rsp)
-	cvtss2sd	%xmm0, %xmm0
-	leaq	14(%rsp), %rsi
+	pxor	%xmm2, %xmm2
+	cvtsd2ss	%xmm0, %xmm2
+	movss	%xmm2, 12(%rsp)
+	movl	$45, %esi
+	movq	(%rbx), %rdi
+	call	strrchr
+	leaq	1(%rax), %rsi
+	pxor	%xmm0, %xmm0
+	cvtss2sd	12(%rsp), %xmm0
 	movl	$.LC1, %edi
 	movl	$1, %eax
 	call	printf

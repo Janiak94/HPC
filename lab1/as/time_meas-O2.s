@@ -17,36 +17,34 @@ main:
 	.cfi_offset 3, -16
 	movq	%rsi, %rbx
 	movl	$1, %esi
-	subq	$48, %rsp
-	.cfi_def_cfa_offset 64
-	leaq	16(%rsp), %rdi
+	subq	$32, %rsp
+	.cfi_def_cfa_offset 48
+	movq	%rsp, %rdi
 	call	timespec_get
-	leaq	32(%rsp), %rdi
+	leaq	16(%rsp), %rdi
 	movl	$1, %esi
 	call	timespec_get
-	movq	40(%rsp), %rax
+	movq	(%rbx), %rdi
+	movl	$45, %esi
+	call	strrchr
+	movq	24(%rsp), %rdx
 	pxor	%xmm0, %xmm0
-	subq	24(%rsp), %rax
-	cvtsi2sdq	%rax, %xmm0
+	subq	8(%rsp), %rdx
+	cvtsi2sdq	%rdx, %xmm0
 	pxor	%xmm1, %xmm1
-	movq	32(%rsp), %rax
-	subq	16(%rsp), %rax
-	cvtsi2sdq	%rax, %xmm1
-	mulsd	.LC0(%rip), %xmm0
-	movq	(%rbx), %rax
-	leaq	14(%rsp), %rsi
+	movq	16(%rsp), %rdx
+	subq	(%rsp), %rdx
+	cvtsi2sdq	%rdx, %xmm1
+	leaq	1(%rax), %rsi
 	movl	$.LC1, %edi
-	movzwl	10(%rax), %edx
-	movw	%dx, 14(%rsp)
-	movzbl	12(%rax), %eax
-	addsd	%xmm1, %xmm0
-	movb	%al, 16(%rsp)
 	movl	$1, %eax
+	mulsd	.LC0(%rip), %xmm0
+	addsd	%xmm1, %xmm0
 	cvtsd2ss	%xmm0, %xmm0
 	cvtss2sd	%xmm0, %xmm0
 	call	printf
 	xorl	%eax, %eax
-	addq	$48, %rsp
+	addq	$32, %rsp
 	.cfi_def_cfa_offset 16
 	popq	%rbx
 	.cfi_def_cfa_offset 8
