@@ -5,6 +5,7 @@
 
 #define SIZE 1000000000
 
+
 int main(int argc, char *argv[]){
 	if(argc != 1){
 		return -1;

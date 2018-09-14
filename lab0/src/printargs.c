@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
+//structure that describes the args and if they are set
 struct arg_t{
 	bool is_set;
 	int val;
