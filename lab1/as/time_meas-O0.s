@@ -7,7 +7,7 @@
 	.globl	main
 	.type	main, @function
 main:
-.LFB5:
+.LFB0:
 	.cfi_startproc
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
@@ -17,28 +17,23 @@ main:
 	subq	$80, %rsp
 	movl	%edi, -68(%rbp)
 	movq	%rsi, -80(%rbp)
-	cmpl	$1, -68(%rbp)
-	je	.L2
-	movl	$-1, %eax
-	jmp	.L6
-.L2:
 	movl	$0, -4(%rbp)
 	leaq	-48(%rbp), %rax
 	movl	$1, %esi
 	movq	%rax, %rdi
 	call	timespec_get
 	movq	$0, -16(%rbp)
-	jmp	.L4
-.L5:
+	jmp	.L2
+.L3:
 	movq	-16(%rbp), %rax
 	movl	%eax, %edx
 	movl	-4(%rbp), %eax
 	addl	%edx, %eax
 	movl	%eax, -4(%rbp)
 	addq	$1, -16(%rbp)
-.L4:
+.L2:
 	cmpq	$999999999, -16(%rbp)
-	jbe	.L5
+	jbe	.L3
 	leaq	-64(%rbp), %rax
 	movl	$1, %esi
 	movq	%rax, %rdi
@@ -72,12 +67,11 @@ main:
 	movl	$1, %eax
 	call	printf
 	movl	$0, %eax
-.L6:
 	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-.LFE5:
+.LFE0:
 	.size	main, .-main
 	.section	.rodata
 	.align 8

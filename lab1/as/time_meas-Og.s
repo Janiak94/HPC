@@ -7,10 +7,8 @@
 	.globl	main
 	.type	main, @function
 main:
-.LFB24:
+.LFB11:
 	.cfi_startproc
-	cmpl	$1, %edi
-	jne	.L5
 	pushq	%rbx
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
@@ -21,12 +19,12 @@ main:
 	leaq	32(%rsp), %rdi
 	call	timespec_get
 	movl	$0, %eax
-.L3:
+.L2:
 	cmpq	$999999999, %rax
-	ja	.L10
+	ja	.L5
 	addq	$1, %rax
-	jmp	.L3
-.L10:
+	jmp	.L2
+.L5:
 	movl	$1, %esi
 	leaq	16(%rsp), %rdi
 	call	timespec_get
@@ -59,12 +57,8 @@ main:
 	popq	%rbx
 	.cfi_def_cfa_offset 8
 	ret
-.L5:
-	.cfi_restore 3
-	movl	$-1, %eax
-	ret
 	.cfi_endproc
-.LFE24:
+.LFE11:
 	.size	main, .-main
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8

@@ -8,10 +8,8 @@
 	.globl	main
 	.type	main, @function
 main:
-.LFB24:
+.LFB11:
 	.cfi_startproc
-	cmpl	$1, %edi
-	jne	.L3
 	pushq	%rbx
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
@@ -49,12 +47,8 @@ main:
 	popq	%rbx
 	.cfi_def_cfa_offset 8
 	ret
-.L3:
-	.cfi_restore 3
-	orl	$-1, %eax
-	ret
 	.cfi_endproc
-.LFE24:
+.LFE11:
 	.size	main, .-main
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8

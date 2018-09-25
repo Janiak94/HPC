@@ -39,7 +39,7 @@ int main(){
 	timespec_get(&finish_ts, TIME_UTC);
 
 	printf(
-		"Run time mul_cpx_separetefile: %.10f \n",
+		"Run time mul_cpx_mainfile: %.10f \n",
 		finish_ts.tv_sec - start_ts.tv_sec +
 		(finish_ts.tv_nsec - start_ts.tv_nsec)*1e-9
 	);

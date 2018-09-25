@@ -1,5 +1,4 @@
 #include <time.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -7,9 +6,6 @@
 
 
 int main(int argc, char *argv[]){
-	if(argc != 1){
-		return -1;
-	}
 	struct timespec start_ts, finish_ts;
 	int sum = 0;
 	timespec_get(&start_ts, TIME_UTC);
